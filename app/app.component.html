@@ -1,0 +1,66 @@
+<hello name="{{ name }}"></hello>
+
+
+<ngx-datatable
+  class="material fullscreen"
+  [rows]="rows"
+
+  
+  [style.backgroundColor]="tableProperties.backgroundColor"
+  [style.color]="tableProperties.bodyFontColor || basicProperty.fontColor"
+  [style]="'height: 100%;overflow-y: visible;--row-selection-color:' + selectionBackgroundColor +';'"
+ 
+ 
+>
+  <!-- Columns and Rows -->
+  <ngx-datatable-column
+    [prop]="columna.prop"
+    [headerClass]="'default-column'"
+	
+		#dtcolumn
+    *ngFor="let columna of columnsProperties.columns; let colIndex = index"
+  >
+    <!-- Columns Template -->
+    <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+	
+      <span
+
+        [ngStyle]="{
+          'font-family': columna.font || tableProperties.headerFont || font,
+          'font-size': tableProperties.headerFontSize ? tableProperties.headerFontSize + 'px' : 'inherit',
+          'font-weight': fontWeight,
+          'font-style': fontWeight,
+          color: columna.fontColor || tableProperties.headerFontColor || fontColor,
+          'text-decoration': textDecoration
+        }"
+      >
+        {{ columna.name }}
+      </span>
+    </ng-template>
+    <!-- Rows Template -->
+    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+      <div [id]="'row_' + rowIndex + '_col_' + colIndex" [rowIndex]="rowIndex" [backgroundColor]="columna.backgroundColor" [colIndex]="colIndex" initDiv>
+        <span
+          [ngStyle]="{
+            'font-family': columna.font || tableProperties.headerFont || font,
+            'font-size': columna.fontSize ? columna.fontSize + 'px' : 'inherit',
+            'font-weight': fontWeight,
+            'font-style': fontWeight,
+            color: columna.fontColor || tableProperties.bodyFontColor || fontColor,
+            'text-decoration': textDecoration
+          }"
+        >
+          {{ row[columna.prop] }}
+        </span>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+
+<div>
+
+<input matInput #v1 placeholder="col" >
+<input matInput  #v2 placeholder="row">
+<button (click)="apply(v1.value, v2.value)">aplicar</button>
+</div>
