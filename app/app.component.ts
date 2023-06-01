@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
+import { InitDivDirective } from './init.directive';
 
 @Component({
   selector: 'my-app',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss', './material.scss'],
 })
 export class AppComponent {
+
+  constructor(private  renderer: Renderer2){}
   // Datos de ejemplo para columnsProperties
   columnsProperties = {
     columns: [
@@ -116,6 +119,10 @@ export class AppComponent {
 
   customProp = [];
   apply(col, row){
-   this.customProp.push({col: col, row: row, background: 'yellow' })
+   this.customProp.push({col: col, row: row, backgroundColor: 'yellow' })
+   console.log(this.customProp)
+   const bodyCell =  InitDivDirective.bodyCells[row][col];
+   this.renderer.setStyle(bodyCell,  'background-color',  'yellow');
   }
+ 
 }
